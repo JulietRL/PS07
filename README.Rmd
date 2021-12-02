@@ -33,6 +33,15 @@ cost <- colleges_percent %>%
   rename(Private = re_private)
 ```
 
+### Number of Private and Public Colleges in the US
+
+```{r}
+total_sum <- cost %>%
+  group_by(Private) %>%
+  summarise(total = n())
+knitr::kable(total_sum)
+```
+
 ## Figure 1: Graduation Rates for private and public colleges
 ```{r}
 ggplot(cost, aes(x = Grad.Rate)) +
@@ -48,8 +57,10 @@ grad_rate_sum <- cost %>%
   summarise(median = median(Grad.Rate),
             min = min(Grad.Rate),
             max = max(Grad.Rate))
-grad_rate_sum
+knitr::kable(grad_rate_sum)
 ```
+
+  Private colleges appear to have higher graduation rates than public colleges. However, the majority of both types of colleges have graduation rates higher than 35-40%.
 
 ## Figure 2: Room and board costs for Private and Public Colleges
 ```{r}
@@ -66,7 +77,9 @@ rb_cost_sum <- cost %>%
   summarise(median = median(Room.Board),
             min = min(Room.Board),
             max = max(Room.Board))
-rb_cost_sum
+knitr::kable(rb_cost_sum)
 ```
+
+  Private colleges typically charge more for room and board. However, there is a large amount of overlap between private and public colleges around $3000 to $5000.  
 
 Data Source: https://www.kaggle.com/yashgpt/us-college-data

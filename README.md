@@ -38,6 +38,20 @@ cost <- colleges_percent %>%
   rename(Private = re_private)
 ```
 
+### Number of Private and Public Colleges in the US
+
+``` r
+total_sum <- cost %>%
+  group_by(Private) %>%
+  summarise(total = n())
+knitr::kable(total_sum)
+```
+
+| Private |  total|
+|:--------|------:|
+| Private |    564|
+| Public  |    212|
+
 Figure 1: Graduation Rates for private and public colleges
 ----------------------------------------------------------
 
@@ -48,7 +62,7 @@ ggplot(cost, aes(x = Grad.Rate)) +
   labs(x = "Graduation Rate")
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-4-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-5-1.png)
 
 Summary Statistics for graduation rates
 ---------------------------------------
@@ -59,14 +73,15 @@ grad_rate_sum <- cost %>%
   summarise(median = median(Grad.Rate),
             min = min(Grad.Rate),
             max = max(Grad.Rate))
-grad_rate_sum
+knitr::kable(grad_rate_sum)
 ```
 
-    ## # A tibble: 2 × 4
-    ##   Private median   min   max
-    ##   <chr>    <dbl> <int> <int>
-    ## 1 Private     69    15   100
-    ## 2 Public      55    10   100
+| Private |  median|  min|  max|
+|:--------|-------:|----:|----:|
+| Private |      69|   15|  100|
+| Public  |      55|   10|  100|
+
+Private colleges appear to have higher graduation rates than public colleges. However, the majority of both types of colleges have graduation rates higher than 35-40%.
 
 Figure 2: Room and board costs for Private and Public Colleges
 --------------------------------------------------------------
@@ -78,7 +93,7 @@ ggplot(cost, aes(x = Room.Board)) +
   labs(x = "Room and Board Cost")
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-6-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-7-1.png)
 
 Summary Statistics for Room and Board Costs
 -------------------------------------------
@@ -89,13 +104,14 @@ rb_cost_sum <- cost %>%
   summarise(median = median(Room.Board),
             min = min(Room.Board),
             max = max(Room.Board))
-rb_cost_sum
+knitr::kable(rb_cost_sum)
 ```
 
-    ## # A tibble: 2 × 4
-    ##   Private median   min   max
-    ##   <chr>    <dbl> <int> <int>
-    ## 1 Private   4400  2370  8124
-    ## 2 Public    3708  1780  6540
+| Private |  median|   min|   max|
+|:--------|-------:|-----:|-----:|
+| Private |    4400|  2370|  8124|
+| Public  |    3708|  1780|  6540|
+
+Private colleges typically charge more for room and board. However, there is a large amount of overlap between private and public colleges around $3000 to $5000.
 
 Data Source: <https://www.kaggle.com/yashgpt/us-college-data>
