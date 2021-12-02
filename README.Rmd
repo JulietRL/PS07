@@ -1,0 +1,68 @@
+---
+title: "Private and Public Colleges in the US"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Including Code
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+colleges <- read.csv("College_Data.csv")
+```
+
+```{r cars}
+colleges_percent <- colleges %>%
+  mutate(percent_acc = Accept/Apps)
+```
+
+```{r}
+cost <- colleges_percent %>%
+  mutate(total = Room.Board + Books + Personal) %>%
+  filter(!Grad.Rate >= 101) %>%
+  mutate(re_private = ifelse(Private == "Yes", "Private", "Public")) %>%
+  select(-Private) %>%
+  rename(Private = re_private)
+```
+
+```{r}
+ggplot(cost, aes(x = Grad.Rate)) +
+  facet_wrap(~Private, nrow = 2) +
+  geom_histogram(fill = "dodgerblue4") +
+  labs(x = "Graduation Rate",
+       title = "Graduation rates for private and public colleges")
+```
+
+```{r}
+grad_rate_sum <- cost %>%
+  group_by(Private) %>%
+  summarise(median = median(Grad.Rate),
+            min = min(Grad.Rate),
+            max = max(Grad.Rate))
+grad_rate_sum
+```
+
+
+```{r}
+ggplot(cost, aes(x = Room.Board)) +
+  facet_wrap(~Private, nrow = 2) +
+  geom_histogram(fill = "dodgerblue4") +
+  labs(x = "Room and Board Cost",
+       title = "Room and board costs for private and public colleges")
+```
+
+```{r}
+rb_cost_sum <- cost %>%
+  group_by(Private) %>%
+  summarise(median = median(Room.Board),
+            min = min(Room.Board),
+            max = max(Room.Board))
+rb_cost_sum
+```
+
