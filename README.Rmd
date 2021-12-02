@@ -7,7 +7,7 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Including Code
+###Loading Data
 
 ```{r}
 library(tidyverse)
@@ -16,6 +16,8 @@ library(tidyverse)
 ```{r}
 colleges <- read.csv("College_Data.csv")
 ```
+
+### Wrangling for easier manipulation and visualization
 
 ```{r cars}
 colleges_percent <- colleges %>%
@@ -31,14 +33,15 @@ cost <- colleges_percent %>%
   rename(Private = re_private)
 ```
 
+## Figure 1: Graduation Rates for private and public colleges
 ```{r}
 ggplot(cost, aes(x = Grad.Rate)) +
+  geom_histogram(fill = "dodgerblue4", bins = 15) +
   facet_wrap(~Private, nrow = 2) +
-  geom_histogram(fill = "dodgerblue4") +
-  labs(x = "Graduation Rate",
-       title = "Graduation rates for private and public colleges")
+  labs(x = "Graduation Rate")
 ```
 
+## Summary Statistics for graduation rates
 ```{r}
 grad_rate_sum <- cost %>%
   group_by(Private) %>%
@@ -48,15 +51,15 @@ grad_rate_sum <- cost %>%
 grad_rate_sum
 ```
 
-
+## Figure 2: Room and board costs for Private and Public Colleges
 ```{r}
 ggplot(cost, aes(x = Room.Board)) +
+  geom_histogram(fill = "dodgerblue4", bins = 15) +
   facet_wrap(~Private, nrow = 2) +
-  geom_histogram(fill = "dodgerblue4") +
-  labs(x = "Room and Board Cost",
-       title = "Room and board costs for private and public colleges")
+  labs(x = "Room and Board Cost")
 ```
 
+## Summary Statistics for Room and Board Costs
 ```{r}
 rb_cost_sum <- cost %>%
   group_by(Private) %>%
@@ -66,3 +69,4 @@ rb_cost_sum <- cost %>%
 rb_cost_sum
 ```
 
+Data Source: https://www.kaggle.com/yashgpt/us-college-data

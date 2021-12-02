@@ -1,8 +1,7 @@
-Untitled
+Private and Public Colleges in the US
 ================
 
-Including Code
---------------
+### Loading Data
 
 ``` r
 library(tidyverse)
@@ -23,6 +22,8 @@ library(tidyverse)
 colleges <- read.csv("College_Data.csv")
 ```
 
+### Wrangling for easier manipulation and visualization
+
 ``` r
 colleges_percent <- colleges %>%
   mutate(percent_acc = Accept/Apps)
@@ -37,17 +38,20 @@ cost <- colleges_percent %>%
   rename(Private = re_private)
 ```
 
+Figure 1: Graduation Rates for private and public colleges
+----------------------------------------------------------
+
 ``` r
 ggplot(cost, aes(x = Grad.Rate)) +
+  geom_histogram(fill = "dodgerblue4", bins = 15) +
   facet_wrap(~Private, nrow = 2) +
-  geom_histogram(fill = "dodgerblue4") +
-  labs(x = "Graduation Rate",
-       title = "Graduation rates for private and public colleges")
+  labs(x = "Graduation Rate")
 ```
 
-    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-
 ![](README_files/figure-markdown_github/unnamed-chunk-4-1.png)
+
+Summary Statistics for graduation rates
+---------------------------------------
 
 ``` r
 grad_rate_sum <- cost %>%
@@ -64,17 +68,20 @@ grad_rate_sum
     ## 1 Private     69    15   100
     ## 2 Public      55    10   100
 
+Figure 2: Room and board costs for Private and Public Colleges
+--------------------------------------------------------------
+
 ``` r
 ggplot(cost, aes(x = Room.Board)) +
+  geom_histogram(fill = "dodgerblue4", bins = 15) +
   facet_wrap(~Private, nrow = 2) +
-  geom_histogram(fill = "dodgerblue4") +
-  labs(x = "Room and Board Cost",
-       title = "Room and board costs for private and public colleges")
+  labs(x = "Room and Board Cost")
 ```
 
-    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-
 ![](README_files/figure-markdown_github/unnamed-chunk-6-1.png)
+
+Summary Statistics for Room and Board Costs
+-------------------------------------------
 
 ``` r
 rb_cost_sum <- cost %>%
@@ -90,3 +97,5 @@ rb_cost_sum
     ##   <chr>    <dbl> <int> <int>
     ## 1 Private   4400  2370  8124
     ## 2 Public    3708  1780  6540
+
+Data Source: <https://www.kaggle.com/yashgpt/us-college-data>
