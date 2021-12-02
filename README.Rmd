@@ -17,7 +17,7 @@ library(tidyverse)
 colleges <- read.csv("College_Data.csv")
 ```
 
-### Wrangling for easier manipulation and visualization
+### Wrangling for Easier Manipulation and Visualization
 
 ```{r cars}
 colleges_percent <- colleges %>%
@@ -42,7 +42,7 @@ total_sum <- cost %>%
 knitr::kable(total_sum)
 ```
 
-## Figure 1: Graduation Rates for private and public colleges
+## Figure 1: Graduation Rates for Private and Public Colleges
 ```{r}
 ggplot(cost, aes(x = Grad.Rate)) +
   geom_histogram(fill = "dodgerblue4", bins = 15) +
@@ -50,7 +50,7 @@ ggplot(cost, aes(x = Grad.Rate)) +
   labs(x = "Graduation Rate")
 ```
 
-## Summary Statistics for graduation rates
+## Summary Statistics for Graduation Rates
 ```{r}
 grad_rate_sum <- cost %>%
   group_by(Private) %>%
@@ -62,7 +62,7 @@ knitr::kable(grad_rate_sum)
 
   Private colleges appear to have higher graduation rates than public colleges. However, the majority of both types of colleges have graduation rates higher than 35-40%.
 
-## Figure 2: Room and board costs for Private and Public Colleges
+## Figure 2: Room and Board Costs for Private and Public Colleges
 ```{r}
 ggplot(cost, aes(x = Room.Board)) +
   geom_histogram(fill = "dodgerblue4", bins = 15) +
